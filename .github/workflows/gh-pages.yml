@@ -26,8 +26,8 @@ jobs:
       - run: julia --project=. -e '
             using Pkg;
             Pkg.status();
-            pwd();
-            readdir()'
+            @show pwd();
+            @show readdir()'
 
       - run: julia --project=gh-pages/ gh-pages/main.jl
 
