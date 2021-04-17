@@ -27,5 +27,5 @@ jobs:
             using Pkg;
             Pkg.status()'
 
-      - run: julia --project=gh-pages main.jl
+      - run: julia --project=gh-pages/ gh-pages/main.jl
 
