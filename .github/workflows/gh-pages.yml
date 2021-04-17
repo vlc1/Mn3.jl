@@ -25,7 +25,9 @@ jobs:
       - uses: julia-actions/julia-buildpkg@latest
       - run: julia --project=. -e '
             using Pkg;
-            Pkg.status()'
+            Pkg.status();
+            pwd();
+            readdir()'
 
       - run: julia --project=gh-pages/ gh-pages/main.jl
 
