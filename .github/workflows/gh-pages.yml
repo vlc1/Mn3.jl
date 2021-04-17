@@ -18,9 +18,9 @@ jobs:
           persist-credentials: false
 
       - name: "Setup Julia environment"
-          uses: julia-actions/setup-julia@latest
-          with:
-            version: 1.6.0
+        uses: julia-actions/setup-julia@latest
+        with:
+          version: 1.6.0
 
       - name: "Instantiate Mn3 project"
         run: |
