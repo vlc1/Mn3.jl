@@ -24,7 +24,7 @@ jobs:
 
       - name: "Instantiate Mn3 project"
         run: julia --project=. -e '
-            using Pkg
-            Pkg.develop(PackageSpec(path=pwd()))
+            using Pkg;
+            Pkg.develop(PackageSpec(path=pwd()));
             Pkg.instantiate()'
 
