@@ -23,9 +23,8 @@ jobs:
           version: 1.6.0
 
       - name: "Instantiate Mn3 project"
-        run: |
-          julia --project=. -e '
-            using Pkg.
+        run: julia --project=. -e '
+            using Pkg
             Pkg.develop(PackageSpec(path=pwd()))
             Pkg.instantiate()'
 
