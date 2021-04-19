@@ -1,4 +1,4 @@
-name: "Build and deploy Github pages"
+name: Build and deploy Github pages
 
 on:
   push:
@@ -6,28 +6,34 @@ on:
       - master
 
 jobs:
-
   build-and-deploy:
+
     runs-on: ubuntu-latest
 
     steps:
 
-      - name: "Checkout"
-        uses: actions/checkout@v2
-        with:
-          persist-credentials: false
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        persist-credentials: false
 
-      - name: "Setup Julia environment"
-        uses: julia-actions/setup-julia@latest
-        with:
-          version: 1.6.0
+    - name: Install Julia
+      uses: julia-actions/setup-julia@latest
+      with:
+        version: 1.6
 
-      - uses: julia-actions/julia-buildpkg@latest
-      - run: julia --project=. -e '
+    - name: Build
+      run: julia -e '
             using Pkg;
-            Pkg.status();
-            @show pwd();
-            @show readdir()'
+            Pkg.add(["NodeJS", "PkgPage", "DataFrames"]);
+            using NodeJS;
+            run(`$(npm_cmd()) install highlight.js purgecss`);
+            import PkgPage;
+            PkgPage.optimize(input="page", output="")'
 
-      - run: julia --project=gh-pages/ gh-pages/main.jl
+    - name: Deploy
+      uses: JamesIves/github-pages-deploy-action@latest
+      with:
+        branch: gh-pages
+        folder: page/__site
 
