@@ -3,8 +3,8 @@ Add here global page variables to use throughout your website.
 -->
 @def prepath = "Mn3.jl"
 
-+++
-author = "Septimia Zenobia"
+---
+author = "Vincent Le Chenadec"
 mintoclevel = 2
 
 # Add here files or directories that should be ignored by Franklin, otherwise
@@ -15,10 +15,10 @@ ignore = ["node_modules/"]
 
 # RSS (the website_{title, descr, url} must be defined to get RSS)
 generate_rss = true
-website_title = "Franklin Template"
-website_descr = "Example website using Franklin"
-website_url   = "https://tlienart.github.io/FranklinTemplates.jl/"
-+++
+website_title = "Méthodes Numériques pour l'Energétique"
+website_descr = "Enseignement des Méthodes Numériques pour l'Energétique à l'ESIEE en première année filière énergie en apprentissage"
+website_url   = "https://vlc1.github.io/Mn3.jl/"
+---
 
 <!--
 Add here global latex commands to use throughout your pages.
