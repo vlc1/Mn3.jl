@@ -3,7 +3,7 @@ Add here global page variables to use throughout your website.
 -->
 @def prepath = "Mn3.jl"
 
----
++++
 author = "Vincent Le Chenadec"
 mintoclevel = 2
 
@@ -18,7 +18,7 @@ generate_rss = true
 website_title = "Méthodes Numériques pour l'Energétique"
 website_descr = "Enseignement des Méthodes Numériques pour l'Energétique à l'ESIEE en première année filière énergie en apprentissage"
 website_url   = "https://vlc1.github.io/Mn3.jl/"
----
++++
 
 <!--
 Add here global latex commands to use throughout your pages.
