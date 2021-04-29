@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<rss version="2.0"
+  xmlns:content="http://purl.org/rss/1.0/modules/content/"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:media="http://search.yahoo.com/mrss/"
+  xmlns:atom="http://www.w3.org/2005/Atom"
+  xmlns:georss="http://www.georss.org/georss">
+
+  <channel>
+    <title>
+      <![CDATA[  Méthodes Numériques pour l&#39;Energétique  ]]>
+    </title>
+    <link> https://vlc1.github.io/Mn3.jl/ </link>
+    <description>
+      <![CDATA[  Enseignement des Méthodes Numériques pour l&#39;Energétique à l&#39;ESIEE en première année filière énergie en apprentissage  ]]>
+    </description>
+    <atom:link
+      href="https://vlc1.github.io/Mn3.jl/feed.xml"
+      rel="self"
+      type="application/rss+xml" />
+
+
+<item>
+  <title>
+    <![CDATA[  TD  ]]>
+  </title>
+  <link> https://vlc1.github.io/Mn3.jl/td/index.html </link>
+  <guid> https://vlc1.github.io/Mn3.jl/td/index.html </guid>
+  <description>
+    <![CDATA[  A short description of the page  ]]>
+  </description>  
+    
+  <pubDate>Fri, 22 Mar 2019 00:00:00 +0000</pubDate>  
+  
+  
+  <atom:author>
+    <atom:name>Vincent Le Chenadec</atom:name>
+  </atom:author>
+        
+</item>
+
+<item>
+  <title>
+    <![CDATA[  TP  ]]>
+  </title>
+  <link> https://vlc1.github.io/Mn3.jl/tp/index.html </link>
+  <guid> https://vlc1.github.io/Mn3.jl/tp/index.html </guid>
+  <description>
+    <![CDATA[  A short description of the page  ]]>
+  </description>  
+    
+  <pubDate>Fri, 22 Mar 2019 00:00:00 +0000</pubDate>  
+  
+  
+  <atom:author>
+    <atom:name>Vincent Le Chenadec</atom:name>
+  </atom:author>
+        
+</item>
+</channel></rss>

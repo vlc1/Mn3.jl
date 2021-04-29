@@ -1,4 +1,4 @@
-Sitemap: sitemap.xml
+Sitemap: https://vlc1.github.io/Mn3.jl/sitemap.xml
 
 User-agent: *
 Disallow:
