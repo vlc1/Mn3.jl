@@ -10,5 +10,7 @@ rss = "A short description of the page"
 
 \toc
 
+Les recueils d'exercices et corrections sont disponibles [ici](https://drive.google.com/drive/folders/1MJ136ACvz6-kqRzVW9VTszAn4lRbyQk1?usp=sharing)
+
 ## TD 1
 
