@@ -6,7 +6,7 @@ using InteractiveUtils
 
 # ╔═╡ 0162aa9a-f363-11ea-192a-8350869f18df
 md"""
-Notebook [Pluto](https://github.com/vlc1/Mn3.jl/notebook/tp/1/part2.jl) de ce notebook.
+Notebook au format Pluto disponible [ici](https://github.com/vlc1/Mn3.jl/blob/master/notebook/tp/1/part1.jl).
 
 """
 
