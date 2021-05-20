@@ -27,7 +27,7 @@ Lancer enfin l'installation.
 
 ## Étape 2 : installation et démarrage
 
-Le programme "Julia 1.6.*" doit maintenant être installé sur votre ordinateur. Pour le démarrer, chercher l'exécutable et lancer l'installation. Vous devriez voir apparaitre la console Julia, aussi appelée *Julia REPL*.
+Le programme "Julia 1.6.\*" doit maintenant être installé sur votre ordinateur. Pour le démarrer, chercher l'exécutable et lancer l'installation. Vous devriez voir apparaitre la console Julia, aussi appelée *Julia REPL*.
 
 ## Étape 3 : prise en main de la console
 

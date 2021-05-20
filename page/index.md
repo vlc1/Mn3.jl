@@ -7,7 +7,7 @@
 
 ## Organisation de l'enseignement
 
-Les diaporamas présentés en cours sont disponibles [ici](https://drive.google.com/drive/folders/1cEtjdrHB1cQdhT1Vh3Ixj_XFhC13d0kL?usp=sharing).
+Tous les documents présentés en cours, TD et TP, sont disponibles [ici](https://drive.google.com/drive/folders/1vUTXqg78QgKySnv9aLVHpCkNJiUpL-jC?usp=sharing).
 
-Voir aussi les pages [TD](/td/) et [TP](/tp/).
+Voir aussi la page [séances](/session/).
 
