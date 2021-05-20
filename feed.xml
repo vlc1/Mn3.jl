@@ -25,27 +25,8 @@
   <title>
     <![CDATA[  TD  ]]>
   </title>
-  <link> https://vlc1.github.io/Mn3.jl/td/index.html </link>
-  <guid> https://vlc1.github.io/Mn3.jl/td/index.html </guid>
-  <description>
-    <![CDATA[  A short description of the page  ]]>
-  </description>  
-    
-  <pubDate>Fri, 22 Mar 2019 00:00:00 +0000</pubDate>  
-  
-  
-  <atom:author>
-    <atom:name>Vincent Le Chenadec</atom:name>
-  </atom:author>
-        
-</item>
-
-<item>
-  <title>
-    <![CDATA[  TP  ]]>
-  </title>
-  <link> https://vlc1.github.io/Mn3.jl/tp/index.html </link>
-  <guid> https://vlc1.github.io/Mn3.jl/tp/index.html </guid>
+  <link> https://vlc1.github.io/Mn3.jl/session/index.html </link>
+  <guid> https://vlc1.github.io/Mn3.jl/session/index.html </guid>
   <description>
     <![CDATA[  A short description of the page  ]]>
   </description>  
