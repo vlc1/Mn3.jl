@@ -14,7 +14,7 @@ rss = "A short description of the page"
 
 ## 25/05/2021
 
-Les enregistrements sont disponibles [ici](https://filesender.renater.fr/?s=download&token=33eb01ff-1d93-4349-952d-43ff9d0e8729).
+[Enregistrements](https://filesender.renater.fr/?s=download&token=33eb01ff-1d93-4349-952d-43ff9d0e8729) et [correction](https://github.com/vlc1/Mn3.jl/blob/solution/notebook/tp/1/part3.jl) du notebook sur les tableaux.
 
 # TD/TP
 
@@ -25,5 +25,5 @@ Les enregistrements sont disponibles [ici](https://filesender.renater.fr/?s=down
 Les liens vers les notebooks sont donnés ci-après :
 
 1. [Installation](https://github.com/vlc1/Mn3.jl/blob/master/notebook/tp/1/part1.jl),
-1. [Tableaux](https://github.com/vlc1/Mn3.jl/blob/master/notebook/tp/1/part3.jl).
+1. [Tableaux](https://github.com/vlc1/Mn3.jl/blob/master/notebook/tp/1/part3.jl) ([version corrigée](https://github.com/vlc1/Mn3.jl/blob/solution/notebook/tp/1/part3.jl)).
 
