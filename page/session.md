@@ -10,15 +10,15 @@ rss = "A short description of the page"
 
 \toc
 
-# Cours
+## Cours
 
-## 25/05/2021
+### 25/05/2021
 
 [Enregistrements](https://filesender.renater.fr/?s=download&token=33eb01ff-1d93-4349-952d-43ff9d0e8729) et [correction](https://github.com/vlc1/Mn3.jl/blob/solution/notebook/tp/1/part3.jl) du notebook sur les tableaux.
 
-# TD/TP
+## TD/TP
 
-## 20/05/2021
+### 20/05/2021
 
 Les enregistrements sont disponibles [ici](https://filesender.renater.fr/?s=download&token=bfdfa8f3-f766-4c1d-b5f2-c41cd009f763).
 
