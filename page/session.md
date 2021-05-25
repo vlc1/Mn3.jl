@@ -12,7 +12,9 @@ rss = "A short description of the page"
 
 # Cours
 
-## 04/05/2021
+## 25/05/2021
+
+Les enregistrements sont disponibles [ici](https://filesender.renater.fr/?s=download&token=33eb01ff-1d93-4349-952d-43ff9d0e8729).
 
 # TD/TP
 
