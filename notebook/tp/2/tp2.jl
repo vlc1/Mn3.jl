@@ -321,16 +321,6 @@ begin
 	plot!(fig, t -> first.(solution.(t)), label = "exact")
 end
 
-# ╔═╡ 107eb128-f8c1-11ea-0ffc-c3d57849b589
-md"""
-**Question** -- Augmenter progressivement le pas de temps d'intégration de `Problem(explicit, linear)`. Que remarque t'on ?
-
-**Question** -- Tester différents schémas avec différents pas de temps. Qu'observe t'on ?
-
-**Question** -- Calculer l'erreur à un temps donné (par exemple, ``T = 1``) en fonction du pas en temps pour chacun des schémas implémentés. Visualiser ces données sur un graphique en échelle logarithmique.
-
-"""
-
 # ╔═╡ 6be4f6f8-58e3-4e23-b34e-514e1045d08e
 md"""
 6. Utiliser les fonctions `linear` et `solution` définie précédemment dans l'implémentation de la fonction `error` ci-dessous, qui calcule l'erreur
@@ -446,7 +436,6 @@ Les paramètres suivants enfin caractérisent les interactions entre les deux es
 # ╠═1887218b-4a77-4e76-8a97-54d90e69b419
 # ╟─a691aa87-e01d-40f6-84ae-29b9ab13fb2b
 # ╠═b9a3b65e-9c81-499d-acc5-85afa8d6703b
-# ╟─107eb128-f8c1-11ea-0ffc-c3d57849b589
 # ╟─6be4f6f8-58e3-4e23-b34e-514e1045d08e
 # ╠═7fafbd51-99a9-4fea-bebf-6160e62a3ef4
 # ╟─d764d914-7a16-434a-8954-1f7233ee601c
