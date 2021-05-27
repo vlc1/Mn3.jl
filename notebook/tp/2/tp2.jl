@@ -28,6 +28,7 @@ md"""
 
 Quelques points vont être abordés en début de séance :
 
+1. Deux nouveaux *packages* : `Plots` et `NLsolve` ;
 1. Fonctions et types d'arguments ;
 1. La notation `.` (*broadcast) ;
 1. Premier (`first`) et dernier (`last`) éléments d'un tableau.
