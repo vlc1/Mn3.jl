@@ -97,7 +97,7 @@ On définira dans un premier temps la fonction `kepler!` définie ci-dessous.
 # ╔═╡ bea20ce9-88ff-45e4-bb5a-494c4d2d19c2
 # Q1 -- À MODIFIER
 function kepler!(res, x)
-	res[1] = x[1] - 1
+	res[1] = x[1]
 	nothing
 end
 
@@ -238,12 +238,28 @@ et
 y_{n + 1} - y_n - \tau f \left ( \frac{t_n + t_{n + 1}}{2}, \frac{y_n + y_{n + 1}}{2} \right ) = 0 \quad \text{(point milieu)}.
 ```
 
-5. En vous inspirant de l'implémentation `explicit!` du schéma explicite d'Euler présentée ci-dessous, implémenter les fonctions `implicit!` (a) et `midpoint!` (b) dont la racine est ``y_{n + 1}``. On préservera le nombre et l'ordre des paramètres, au nombre de 3, à savoir
+5. En vous inspirant de l'implémentation `explicit!` du schéma explicite d'Euler présentée ci-dessous, implémenter les fonctions `implicit!` (a) et `midpoint!` (b) dont la racine est ``y_{n + 1}``. On préservera le nombre et l'ordre des paramètres, au nombre de 6, à savoir
 
+* `res` -- la valeur de la fonction implicite ;
+* `x` -- la solution mise à jour (``y _ {n + 1}``) ;
 * `y` -- la solution précédente (``y _ n``) ;
 * `τ` -- le pas de temps (``\tau``) ;
 * `f` -- le modèle (``f``) ;
 * `t` -- l'instant précédent, (``t _ n``).
+
+Pour le schéma d'Euler explicite, la solution mise à jour ``y_{n + 1}`` est donc définie comme la racine de la fonction implicite suivante
+```math
+F \left ( y_{n + 1}, y_n, \tau, f, t \right ) = y_{n + 1} - y_{n} - \tau f \left ( t_{n}, y_{n} \right ),
+```
+implémentée à l'aide de la fonction `explicit!` ci-dessous.
+
+"""
+
+# ╔═╡ 6438514c-b3f4-4f3e-9759-a14587715a79
+md"""
+!!! note "De l'usage de `!` en Julia"
+
+	Par convention, `!` (*bang* en anglais) est ajouté à la fin du nom d'une fonction lorsque celle-ci modifie son premier argument (ici, `res`).
 
 """
 
@@ -253,12 +269,30 @@ function explicit!(res, x, y, τ, f, t)
 	nothing
 end
 
+# ╔═╡ 036e58db-9f98-4e42-ba1f-b66344db6ae7
+md"""
+Modifier la fonction `implicit!` ci-dessous pour qu'elle corresponde au schéma d'Euler implicite
+```math
+F \left ( y_{n + 1}, y_n, \tau, f, t \right ) = y_{n + 1} - y_{n} - \tau f \left ( t_{n + 1}, y_{n + 1} \right ).
+```
+
+"""
+
 # ╔═╡ ba074cc6-64cb-4f0a-9996-e6306727663c
 # Q5a -- À MODIFIER
 function implicit!(res, x, y, τ, f, t)
 	res .= x .- y
 	nothing
 end
+
+# ╔═╡ 9638da35-a6bc-4771-806e-7ad356fe5297
+md"""
+De même, modifier la fonction `midpoint!` ci-dessous pour lui faire correspondre le schéma du point milieu, qui s'écrira
+```math
+F \left ( y_{n + 1}, y_n, \tau, f, t \right ) = y_{n + 1} - y_{n} - \tau f \left ( t_{n} + \frac{\tau}{2}, \frac{y_n + y_{n + 1}}{2} \right ).
+```
+
+"""
 
 # ╔═╡ ec517a8d-bdef-41e0-bb4e-fac9df1f3c24
 # Q5b -- À MODIFIER
@@ -432,8 +466,11 @@ Les paramètres suivants enfin caractérisent les interactions entre les deux es
 # ╠═3ab81476-f7f8-11ea-3633-09930c9cdffe
 # ╟─2f1bd88d-9d9c-4fd6-aef5-5d061994759f
 # ╟─8a4674da-f7ec-11ea-2faf-4b332a41d7fc
+# ╟─6438514c-b3f4-4f3e-9759-a14587715a79
 # ╠═639dbbd7-e0eb-4234-a37a-254c6f751a74
+# ╟─036e58db-9f98-4e42-ba1f-b66344db6ae7
 # ╠═ba074cc6-64cb-4f0a-9996-e6306727663c
+# ╟─9638da35-a6bc-4771-806e-7ad356fe5297
 # ╠═ec517a8d-bdef-41e0-bb4e-fac9df1f3c24
 # ╟─c87b46c0-f7ec-11ea-2918-d306ffd1c2bd
 # ╠═1887218b-4a77-4e76-8a97-54d90e69b419
