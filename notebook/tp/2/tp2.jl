@@ -325,7 +325,7 @@ end
 md"""
 6. Utiliser les fonctions `linear` et `solution` définie précédemment dans l'implémentation de la fonction `error` ci-dessous, qui calcule l'erreur
 ```math
-y_N - y \left ( s \right )
+y_N - y \left ( t_N \right )
 ```
 en fonction du schéma (`scheme!`) et du pas en temps (`τ`).
 
@@ -340,7 +340,7 @@ end
 
 # ╔═╡ d764d914-7a16-434a-8954-1f7233ee601c
 md"""
-7. Reporter les erreurs à l'instant `s = 1.0` dans le tableau ci-dessous. Commenter.
+7. Calculer (en utilisant la fonction `error`) et reporter les erreurs à l'instant `s = 1.0` dans le tableau ci-dessous. Commenter.
 
 |             | `explicit!` | `implicit!` | `midpoint!` |
 |:-----------:|:-----------:|:-----------:|:-----------:|
@@ -360,7 +360,10 @@ Tout l'intérêt de l'utilisation du package `NLsolve.jl` est que notre impléme
 
 # Au delà du cas linéaire
 
-9. Utiliser ou imaginer un modèle scalaire non-linéaire en modifier la fonction `nonlinear` ci-dessous, et visualiser votre solution numérique pour chacun des trois schémas sur le même graphique.
+9. Utiliser ou imaginer un modèle scalaire non-linéaire en modifier la fonction `nonlinear` ci-dessous, et visualiser votre solution numérique pour chacun des trois schémas sur le même graphique. Vous pourrez par exemple utiliser la question 3 de l'exercice vu en TD :
+```math
+f \colon \left ( t, y \right ) \mapsto 2t - y ^ 2.
+```
 
 """
 
