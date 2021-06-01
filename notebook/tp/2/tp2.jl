@@ -20,6 +20,10 @@ using Plots
 md"""
 Version [Pluto](https://github.com/vlc1/Mn3.jl/blob/master/notebook/tp/2/tp2.jl) de ce notebook.
 
+!!! warning "Remarque importante"
+
+	Les questions de ce *notebook* doivent être traitées de manière séquentielle : Q1, Q2... jusqu'à Q9.
+
 """
 
 # ╔═╡ 3e5d9fa5-acae-42ab-b40e-e1a197edcad2
@@ -205,7 +209,7 @@ md"""
 
 # ╔═╡ 3ab81476-f7f8-11ea-3633-09930c9cdffe
 # Q4 -- À MODIFIER
-solution(t, y = ones(1)) = y
+solution(t, y = ones(1)) = zero(y)
 
 # ╔═╡ 2f1bd88d-9d9c-4fd6-aef5-5d061994759f
 if norm(solution(1.0) - [0.36788]) ≤ 1e-4
@@ -265,8 +269,7 @@ md"""
 
 # ╔═╡ 639dbbd7-e0eb-4234-a37a-254c6f751a74
 function explicit!(res, x, y, τ, f, t)
-	res .= x .- y .- τ .* f(t, y)
-	nothing
+	@. res = x - y - τ * f(t, y)
 end
 
 # ╔═╡ 036e58db-9f98-4e42-ba1f-b66344db6ae7
@@ -281,8 +284,22 @@ F \left ( y_{n + 1}, y_n, \tau, f, t \right ) = y_{n + 1} - y_{n} - \tau f \left
 # ╔═╡ ba074cc6-64cb-4f0a-9996-e6306727663c
 # Q5a -- À MODIFIER
 function implicit!(res, x, y, τ, f, t)
-	res .= x .- y
-	nothing
+	@. res = x - y - τ * f(t, y)
+end
+
+# ╔═╡ 0235cd45-f1b3-4a47-90d4-cece4f805d97
+if norm(implicit!(zeros(1), ones(1), ones(1), √2, (t, y) -> t .+ y, π) - [-7.8571]) ≤ 1e-4
+	md"""
+	!!! tip "😃 Bonne réponse"
+
+		Votre implémentation de `implicit!` est correcte.
+	"""
+else
+	md"""
+	!!! danger "😡 Mauvaise réponse"
+
+		Vérifier votre implémentation de `implicit!`.
+	"""
 end
 
 # ╔═╡ 9638da35-a6bc-4771-806e-7ad356fe5297
@@ -297,8 +314,22 @@ F \left ( y_{n + 1}, y_n, \tau, f, t \right ) = y_{n + 1} - y_{n} - \tau f \left
 # ╔═╡ ec517a8d-bdef-41e0-bb4e-fac9df1f3c24
 # Q5b -- À MODIFIER
 function midpoint!(res, x, y, τ, f, t)
-	res .= x .- y
-	nothing
+	@. res = x - y - τ * f(t, y)
+end
+
+# ╔═╡ 2f458d93-2375-415e-a1df-9aabf54e231f
+if norm(midpoint!(zeros(1), ones(1), ones(1), √2, (t, y) -> t .+ y, π) - [-6.8571]) ≤ 1e-4
+	md"""
+	!!! tip "😃 Bonne réponse"
+
+		Votre implémentation de `midpoint!` est correcte.
+	"""
+else
+	md"""
+	!!! danger "😡 Mauvaise réponse"
+
+		Vérifier votre implémentation de `midpoint!`.
+	"""
 end
 
 # ╔═╡ c87b46c0-f7ec-11ea-2918-d306ffd1c2bd
@@ -349,7 +380,7 @@ La solution numérique peut être obtenue et visualisée comme suit.
 
 # ╔═╡ b9a3b65e-9c81-499d-acc5-85afa8d6703b
 begin
-	local T, Y = integrate(explicit!, linear, 0.1, 1.0)
+	local T, Y = integrate(explicit!, linear, 0.5, 10.0)
 	local fig = plot()
 	scatter!(fig, T, first.(Y), label = "num")
 	plot!(fig, t -> first.(solution.(t)), label = "exact")
@@ -368,8 +399,24 @@ en fonction du schéma (`scheme!`) et du pas en temps (`τ`).
 # ╔═╡ 7fafbd51-99a9-4fea-bebf-6160e62a3ef4
 # Q6 -- À MODIFIER
 function error(scheme!, τ, s)
-	T, Y = integrate(explicit!, linear, τ, s)
-	norm(zero(Y))
+	T, num = integrate(scheme!, linear, τ, s)
+	exact = solution.(T)
+	norm(last(num))
+end
+
+# ╔═╡ a7db5298-bd46-4edf-b34e-27ff7fed5b1e
+if norm(error(explicit!, 0.2, 1.0) - 0.0401994) ≤ 1e-4
+	md"""
+	!!! tip "😃 Bonne réponse"
+
+		Votre implémentation de `error` est correcte.
+	"""
+else
+	md"""
+	!!! danger "😡 Mauvaise réponse"
+
+		Vérifier votre implémentation de `error`.
+	"""
 end
 
 # ╔═╡ d764d914-7a16-434a-8954-1f7233ee601c
@@ -399,50 +446,46 @@ Tout l'intérêt de l'utilisation du package `NLsolve.jl` est que notre impléme
 f \colon \left ( t, y \right ) \mapsto 2t - y ^ 2.
 ```
 
+!!! note "De l'usage du point"
+
+	En Julia, le point (`.`) permet d'appliquer une fonction à chaque élément d'un tableau. Par exemple, la commande suivante élève chaque élément du tableau `y` au carré :
+	```julia
+	y .^ 2
+	```
+
+	Dans le doute, on peut aussi utiliser la *macro* `@.` comme suit :
+	```julia
+	@. y ^ 2
+	```
+    En un sens, elle "saupoudre" l'expression qui la suit de points.
+
 """
 
 # ╔═╡ 91a712b2-f8bd-11ea-3b8c-1bfbd521d29a
 # Q9 -- À MODIFIER
-nonlinear(t, y) = zero(y)
+nonlinear(t, y) = @. y
+
+# ╔═╡ e202c9cd-6603-4c73-9a4d-565cf0de7247
+if norm(nonlinear(π, [√2]) - [4.28319]) ≤ 1e-4
+	md"""
+	!!! tip "😃 Bonne réponse"
+
+		Votre implémentation de `nonlinear` est correcte.
+	"""
+else
+	md"""
+	!!! danger "😡 Mauvaise réponse"
+
+		Vérifier votre implémentation de `nonlinear`.
+	"""
+end
 
 # ╔═╡ 580e8356-4fd2-47e1-a5a4-7063998b4ecb
 begin
 	local T, Y = integrate(explicit!, nonlinear, 0.1, 1.0)
 	local fig = plot()
 	scatter!(fig, T, first.(Y), label = "num")
-	plot!(fig, t -> first.(solution.(t)), label = "exact")
 end
-
-# ╔═╡ 46222752-f91a-11ea-372e-2dde47c81add
-md"""
-# Au delà du cas scalaire
-
-On se propose de résoudre l'[équation de prédation de Lotka-Volterra](https://fr.wikipedia.org/wiki/%C3%89quations_de_pr%C3%A9dation_de_Lotka-Volterra) :
-
-> En mathématiques, les équations de prédation de Lotka-Volterra, que l'on désigne aussi sous le terme de "modèle proie-prédateur", sont un couple d'équations différentielles non-linéaires du premier ordre, et sont couramment utilisées pour décrire la dynamique de systèmes biologiques dans lesquels un prédateur et sa proie interagissent. Elles ont été proposées indépendamment par Alfred James Lotka en 1925 et Vito Volterra en 1926.
-
-Le système d'équations s'écrit :
-```math
-\left \{ \begin{aligned}
-\dot{x} \left ( t \right ) & = x \left ( t \right ) \left [ \alpha - \beta y \left ( t \right ) \right ], \\
-\dot{y} \left ( t \right ) & = y \left ( t \right ) \left [ \delta x \left ( t \right ) - \gamma \right ]
-\end{aligned} \right .
-```
-où
-
-* ``t`` est le temps ;
-* ``x \left ( t \right )`` est l'effectif des proies à l'instant ``t`` ;
-* ``y \left ( t \right )`` est l'effectif des prédateurs à l'instant ``t``.
-
-Les paramètres suivants enfin caractérisent les interactions entre les deux espèces :
-```math
-\alpha = 0.1, \quad \beta = 0.003, \quad \gamma = 0.06, \quad \delta = 0.0012.
-```
-
-10. Implémenter la fonction `lotka` correspond.
-11. Résoudre et visualiser les solutions numérique correspondant à chacun des trois schéma.
-
-"""
 
 # ╔═╡ Cell order:
 # ╟─d61e1ea6-f924-11ea-00dc-794c93177d22
@@ -470,16 +513,19 @@ Les paramètres suivants enfin caractérisent les interactions entre les deux es
 # ╠═639dbbd7-e0eb-4234-a37a-254c6f751a74
 # ╟─036e58db-9f98-4e42-ba1f-b66344db6ae7
 # ╠═ba074cc6-64cb-4f0a-9996-e6306727663c
+# ╟─0235cd45-f1b3-4a47-90d4-cece4f805d97
 # ╟─9638da35-a6bc-4771-806e-7ad356fe5297
 # ╠═ec517a8d-bdef-41e0-bb4e-fac9df1f3c24
+# ╟─2f458d93-2375-415e-a1df-9aabf54e231f
 # ╟─c87b46c0-f7ec-11ea-2918-d306ffd1c2bd
 # ╠═1887218b-4a77-4e76-8a97-54d90e69b419
 # ╟─a691aa87-e01d-40f6-84ae-29b9ab13fb2b
 # ╠═b9a3b65e-9c81-499d-acc5-85afa8d6703b
 # ╟─6be4f6f8-58e3-4e23-b34e-514e1045d08e
 # ╠═7fafbd51-99a9-4fea-bebf-6160e62a3ef4
+# ╟─a7db5298-bd46-4edf-b34e-27ff7fed5b1e
 # ╟─d764d914-7a16-434a-8954-1f7233ee601c
 # ╟─d4637d80-f8c1-11ea-1f7f-df462373ca2d
 # ╠═91a712b2-f8bd-11ea-3b8c-1bfbd521d29a
+# ╟─e202c9cd-6603-4c73-9a4d-565cf0de7247
 # ╠═580e8356-4fd2-47e1-a5a4-7063998b4ecb
-# ╟─46222752-f91a-11ea-372e-2dde47c81add
