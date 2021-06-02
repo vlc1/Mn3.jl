@@ -5,16 +5,7 @@ using Markdown
 using InteractiveUtils
 
 # ╔═╡ 35a850c8-d24c-4593-b551-f3b9bb49e82d
-begin
-	using NLsolve
-	solve(f!, x₀) = getproperty(nlsolve(f!, x₀), :zero)
-end
-
-# ╔═╡ ec1b0cec-af5f-492e-ba55-269c2df5b458
-using LinearAlgebra
-
-# ╔═╡ e8b460cf-3d35-4bbb-8b3a-5a2c5f8a7a21
-using Plots
+using LinearAlgebra, NLsolve, Plots
 
 # ╔═╡ d61e1ea6-f924-11ea-00dc-794c93177d22
 md"""
@@ -65,15 +56,15 @@ L'objectif de cette première partie est de se familiariser avec le *package* `N
 Les cellules suivantes décrivent comment obtenir la racine de la function
 ```math
 \left ( \begin{matrix}
-x \\
-y \end{matrix} \right ) \mapsto \left ( \begin{matrix}
-\left ( x + 3 \right ) \left ( y ^ 3 - 7 \right ) + 18 \\
-\sin \left [ y \exp \left ( x \right ) - 1 \right ]
+x_1 \\
+x_2 \end{matrix} \right ) \mapsto \left ( \begin{matrix}
+\left ( x_1 + 3 \right ) \left ( x_2 ^ 3 - 7 \right ) + 18 \\
+\sin \left [ x_2 \exp \left ( x_1 \right ) - 1 \right ]
 \end{matrix} \right )
 ```
 à partir de la donnée initiale
 ```math
-\left ( x_0, y_0 \right ) = \left ( 0.1, 1.2 \right ).
+\left ( x_1, x_2 \right ) = \left ( 0.1, 1.2 \right ).
 ```
 
 """
@@ -86,7 +77,7 @@ function example!(res, x)
 end
 
 # ╔═╡ 7dccedba-aa05-4821-b1ed-ed873ad9cccb
-solve(example!, [0.1; 1.2])
+getproperty(nlsolve(example!, [0.1; 1.2]), :zero)
 
 # ╔═╡ 073d29d8-7055-4d0c-8565-8732017b89d0
 md"""
@@ -106,7 +97,7 @@ function kepler!(res, x)
 end
 
 # ╔═╡ 2c4151ac-a476-4c1f-a379-f4c3a0174b3d
-if norm(solve(kepler!, [0.0]) - [5.08912]) ≤ 1e-4
+if norm(nlsolve(kepler!, [0.0]).zero - [5.08912]) ≤ 1e-4
 	md"""
 	!!! tip "😃 Bonne réponse"
 
@@ -125,9 +116,9 @@ md"""
 2. **Cas vectoriel** -- Modifier la fonction `system!` ci-dessous afin de résoudre le système d'équations
 ```math
 \left \{ \begin{aligned}
-x + y + z ^ 2 & = 12, \\
-x ^ 2 - y + z & = 2, \\
-2x - y ^ 2 + z & = 1.
+x_1 + x_2 + x_3 ^ 2 & = 12, \\
+x_1 ^ 2 - x_2 + x_3 & = 2, \\
+2x_1 - x_2 ^ 2 + x_3 & = 1.
 \end{aligned} \right .
 ```
 
@@ -143,7 +134,7 @@ function system!(res, x)
 end
 
 # ╔═╡ 42e83fa4-ba23-4e80-a8e6-58816319b134
-if norm(solve(system!, [0.0; 0.0; 0.0]) - [1.0; 2.0; 3.0]) ≤ 1e-4
+if norm(nlsolve(system!, [0.0; 0.0; 0.0]).zero - [1.0; 2.0; 3.0]) ≤ 1e-4
 	md"""
 	!!! tip "😃 Bonne réponse"
 
@@ -253,7 +244,7 @@ y_{n + 1} - y_n - \tau f \left ( \frac{t_n + t_{n + 1}}{2}, \frac{y_n + y_{n + 1
 
 Pour le schéma d'Euler explicite, la solution mise à jour ``y_{n + 1}`` est donc définie comme la racine de la fonction implicite suivante
 ```math
-F \left ( y_{n + 1}, y_n, \tau, f, t \right ) = y_{n + 1} - y_{n} - \tau f \left ( t_{n}, y_{n} \right ),
+F \left ( x, y, \tau, f, t \right ) = x - y - \tau f \left ( t, y \right ),
 ```
 implémentée à l'aide de la fonction `explicit!` ci-dessous.
 
@@ -269,14 +260,14 @@ md"""
 
 # ╔═╡ 639dbbd7-e0eb-4234-a37a-254c6f751a74
 function explicit!(res, x, y, τ, f, t)
-	@. res = x - y - τ * f(t, y)
+	res .= x - y - τ * f(t, y)
 end
 
 # ╔═╡ 036e58db-9f98-4e42-ba1f-b66344db6ae7
 md"""
 Modifier la fonction `implicit!` ci-dessous pour qu'elle corresponde au schéma d'Euler implicite
 ```math
-F \left ( y_{n + 1}, y_n, \tau, f, t \right ) = y_{n + 1} - y_{n} - \tau f \left ( t_{n + 1}, y_{n + 1} \right ).
+F \left ( x, y, \tau, f, t \right ) = x - y - \tau f \left ( t + \tau, x \right ).
 ```
 
 """
@@ -284,7 +275,7 @@ F \left ( y_{n + 1}, y_n, \tau, f, t \right ) = y_{n + 1} - y_{n} - \tau f \left
 # ╔═╡ ba074cc6-64cb-4f0a-9996-e6306727663c
 # Q5a -- À MODIFIER
 function implicit!(res, x, y, τ, f, t)
-	@. res = x - y - τ * f(t, y)
+	res .= x - y - τ * f(t, y)
 end
 
 # ╔═╡ 0235cd45-f1b3-4a47-90d4-cece4f805d97
@@ -306,7 +297,7 @@ end
 md"""
 De même, modifier la fonction `midpoint!` ci-dessous pour lui faire correspondre le schéma du point milieu, qui s'écrira
 ```math
-F \left ( y_{n + 1}, y_n, \tau, f, t \right ) = y_{n + 1} - y_{n} - \tau f \left ( t_{n} + \frac{\tau}{2}, \frac{y_n + y_{n + 1}}{2} \right ).
+F \left ( x, y, \tau, f, t \right ) = x - y - \tau f \left ( t + \frac{\tau}{2}, \frac{x + y}{2} \right ).
 ```
 
 """
@@ -314,7 +305,7 @@ F \left ( y_{n + 1}, y_n, \tau, f, t \right ) = y_{n + 1} - y_{n} - \tau f \left
 # ╔═╡ ec517a8d-bdef-41e0-bb4e-fac9df1f3c24
 # Q5b -- À MODIFIER
 function midpoint!(res, x, y, τ, f, t)
-	@. res = x - y - τ * f(t, y)
+	res .= x - y - τ * f(t, y)
 end
 
 # ╔═╡ 2f458d93-2375-415e-a1df-9aabf54e231f
@@ -354,15 +345,17 @@ y_0 \quad y_1 \quad \cdots \quad y_N.
 """
 
 # ╔═╡ 1887218b-4a77-4e76-8a97-54d90e69b419
-function integrate(scheme!, f, τ, s)
-	t, y = 0.0, ones(1)
+function integrate(scheme!, f, τ, s, y₀, t₀ = zero(τ))
+	t, y = t₀, y₀
     T, Y = [t], [y]
 
 	while t < (1 - √eps(t)) * s
-
-		y = solve(y) do res, x
-			scheme!(res, x, y, τ, f, t)
-		end
+		y = getproperty(
+			nlsolve(y) do res, x
+				scheme!(res, x, y, τ, f, t)
+			end,
+			:zero
+		)
         t += τ
 
         push!(Y, y)
@@ -380,7 +373,7 @@ La solution numérique peut être obtenue et visualisée comme suit.
 
 # ╔═╡ b9a3b65e-9c81-499d-acc5-85afa8d6703b
 begin
-	local T, Y = integrate(explicit!, linear, 0.5, 10.0)
+	local T, Y = integrate(explicit!, linear, 0.5, 10.0, ones(1))
 	local fig = plot()
 	scatter!(fig, T, first.(Y), label = "num")
 	plot!(fig, t -> first.(solution.(t)), label = "exact")
@@ -399,7 +392,7 @@ en fonction du schéma (`scheme!`) et du pas en temps (`τ`).
 # ╔═╡ 7fafbd51-99a9-4fea-bebf-6160e62a3ef4
 # Q6 -- À MODIFIER
 function error(scheme!, τ, s)
-	T, num = integrate(scheme!, linear, τ, s)
+	T, num = integrate(scheme!, linear, τ, s, ones(1))
 	exact = solution.(T)
 	norm(last(num))
 end
@@ -482,7 +475,7 @@ end
 
 # ╔═╡ 580e8356-4fd2-47e1-a5a4-7063998b4ecb
 begin
-	local T, Y = integrate(explicit!, nonlinear, 0.1, 1.0)
+	local T, Y = integrate(explicit!, nonlinear, 0.1, 1.0, ones(1))
 	local fig = plot()
 	scatter!(fig, T, first.(Y), label = "num")
 end
@@ -490,8 +483,6 @@ end
 # ╔═╡ Cell order:
 # ╟─d61e1ea6-f924-11ea-00dc-794c93177d22
 # ╠═35a850c8-d24c-4593-b551-f3b9bb49e82d
-# ╠═ec1b0cec-af5f-492e-ba55-269c2df5b458
-# ╠═e8b460cf-3d35-4bbb-8b3a-5a2c5f8a7a21
 # ╟─3e5d9fa5-acae-42ab-b40e-e1a197edcad2
 # ╟─4ae18622-f7ec-11ea-2f71-d5b166ff50fb
 # ╠═88dd8a5e-651a-4939-9231-6696b78f024c

@@ -35,7 +35,12 @@ Les liens vers les notebooks sont donnés ci-après :
 
 Merci de bien vouloir trouver :
 
-* L'exercice et sa correction dans le Drive ;
+* L'exercice et sa correction sur le Drive ;
 * Les enregistrements [ici](https://filesender.renater.fr/?s=download&token=4008835f-9d77-4794-b6b9-a4403c185c02) ;
 * Le *notebook* [là](https://github.com/vlc1/Mn3.jl/blob/master/notebook/tp/2/tp2.jl).
+
+### 03/06/2021
+
+* La feuille d'exercice se trouve sur le Drive ;
+* Le *notebook* est [là](https://github.com/vlc1/Mn3.jl/blob/master/notebook/tp/3/tp3.jl).
 
