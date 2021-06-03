@@ -42,5 +42,6 @@ Merci de bien vouloir trouver :
 ### 03/06/2021
 
 * La feuille d'exercice se trouve sur le Drive ;
+* Les enregistrements sont [ici](https://filesender.renater.fr/?s=download&token=504c9dd0-5378-435a-a802-e49afe4fd138) ;
 * Le *notebook* est [là](https://github.com/vlc1/Mn3.jl/blob/master/notebook/tp/3/tp3.jl).
 
