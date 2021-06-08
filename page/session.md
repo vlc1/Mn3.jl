@@ -16,9 +16,13 @@ rss = "A short description of the page"
 
 [Enregistrements](https://filesender.renater.fr/?s=download&token=33eb01ff-1d93-4349-952d-43ff9d0e8729) et [correction](https://github.com/vlc1/Mn3.jl/blob/solution/notebook/tp/1/part3.jl) du notebook sur les tableaux.
 
-### 01/05/2021
+### 01/06/2021
 
 L'enregistrement est disponible [ici](https://filesender.renater.fr/?s=download&token=2edc3e71-9910-4179-87f1-21eb72bef60e).
+
+### 08/06/2021
+
+L'enregistrement est disponible [ici](https://filesender.renater.fr/?s=download&token=3af0cdab-e60a-451f-8089-4199095a1afe).
 
 ## TD/TP
 
