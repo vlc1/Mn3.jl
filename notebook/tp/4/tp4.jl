@@ -62,7 +62,7 @@ function rk4!(res, x, y, τ, f, t)
 end
 
 # ╔═╡ 30bf3035-ca50-4086-ab2e-888aed6eadf7
-function integrate(scheme!, f, τ, s, y₀, t₀ = zero(τ))
+function cauchy(scheme!, f, τ, s, y₀, t₀ = zero(τ))
 	t, y = t₀, y₀
     T, Y = [t], [y]
 
@@ -83,7 +83,7 @@ end
 
 # ╔═╡ 12a27568-208a-4ab6-bdc6-f0c01d07e02c
 function error(scheme!, τ, s)
-	T, num = integrate(scheme!, linear, τ, s, ones(1))
+	T, num = cauchy(scheme!, linear, τ, s, ones(1))
 	exact = solution.(T)
 	norm(last(num) - last(exact))
 end
@@ -92,17 +92,17 @@ end
 md"""
 # Domaine de stabilité
 
-On a vu en cours que les domaines de stabilité de plusieurs schémas, notamment celui de la méthode explicite d'Euler
+Les domaines de stabilité de plusieurs schémas, notamment celui de la méthode explicite d'Euler
 ```math
-\left \{ z \in \mathbb{C} \left  / \left \vert 1 + z \right \vert \le 1 \right . \right \}
+\left \{ z \in \mathbb{C} \left  / \left \vert 1 + z \right \vert \le 1 \right . \right \},
 ```
+ont été présentés en cours.
 
-On peut montrer que un schéma explicite de Runge-Kutta d'ordre ``p``, la raison ``\sigma \left ( z \right )`` peut s'écrire sous la forme d'un développement limité de ``\exp \left ( z \right )`` à l'ordre ``p``. Par exemple, le domaine de stabilité de la méthode explicite RK2 implémentée au TP3 est donnée par :
+On peut montrer de plus que pourles schémas explicites de Runge-Kutta d'ordre ``p``, la raison ``\sigma`` peut s'écrire sous la forme d'un développement limité de ``\exp`` à l'ordre ``p``,
 ```math
-\left \{ z \in \mathbb{C} \left  / \left \vert 1 + z + z ^ 2 / 2 \right \vert \le 1 \right . \right \}.
+\sigma \colon z \mapsto \sum_{n = 0} ^ p \frac{z ^ n}{n !}.
 ```
-
-Les cellules suivantes permettent de visualiser les domaines de stabilités de méthodes explicites de Runge-Kutta d'ordre ``1``, ``2``, ``3`` et ``4``...
+La fonction `ratio` ci-dessous implémente cette fonction des arguments ``x`` et ``y``, à savoir les parties réelle et imaginaire de ``z = x + \imath y``.
 
 """
 
@@ -115,8 +115,8 @@ end
 function ratio(rk!, x, y)
 	z = x + y * im
 	t = zero(z)
-	for i in 0:order(rk!)
-		t += z ^ i / factorial(i)
+	for j in 0:order(rk!)
+		t += z ^ j / factorial(j)
 	end
 	abs(t)
 end
@@ -140,7 +140,7 @@ end
 
 # ╔═╡ 64c9a088-4e3e-4a7e-a73f-e2501cf6ba5d
 md"""
-1. Dans le cas du modèle linéaire (``f \colon \left ( t, y \right ) \mapsto \lambda y``) où ``\lambda \in \mathbb{R} ^ -``, la fonction `getmax` implémentée ci-dessous permet de calculer le pas de temps maximal des méthodes explicites de RK1, RK2, RK3 et RK4. Calculer ces valeurs et remplir le tableau ci-dessous.
+1. Dans le cas du modèle linéaire (``f \colon \left ( t, y \right ) \mapsto \lambda y``) où ``\lambda \in \mathbb{R} ^ -``, la fonction `getmax` implémentée ci-dessous permet de calculer le pas de temps au delà duquel les méthodes explicites de RK1, RK2, RK3 et RK4 deviennent instables. Calculer ces valeurs et remplir le tableau ci-dessous.
 
 |               | RK1 | RK2 | RK3 | RK4 |
 |:-------------:|:---:|:---:|:---:|:---:|
@@ -160,9 +160,12 @@ function getmax(rk!, x₀ = [-2.0])
 	)
 end
 
+# ╔═╡ 5505d3e2-6978-472e-8fa5-6c8483f236ba
+xmax = getmax(rk3!)
+
 # ╔═╡ 7824c63f-44bb-432f-9c5f-04b336348250
 md"""
-2. Vérifier qu'au delà de son pas de temps maximal, chaque méthode devient instable. On pourra s'inspirer du code suivant.
+2. Vérifier qu'au delà de ces valeurs, chaque méthode devient instable. On pourra s'inspirer du code suivant.
 
 """
 
@@ -170,7 +173,7 @@ md"""
 begin
 	local xmax = getmax(rk4!)
 	local s = 20.
-	local T, Y = integrate(rk4!, linear, -xmax + 0.1, s, ones(1))
+	local T, Y = cauchy(rk4!, linear, -xmax + 0.1, 10, ones(1))
 	local Z = solution.(T)
 	local fig = plot(xlim = (0, s))
 	plot!(fig, first∘solution, label = "Exacte")
@@ -181,7 +184,7 @@ end
 md"""
 # Ordre de convergence
 
-On rappelle que l'erreur d'un schéma à l'instant ``s = t _ N`` (où ``N = s / \tau``) est définie par
+On rappelle que l'erreur d'un schéma à l'instant ``s = t _ N`` (où ``N = s / \tau``), définie par
 ```math
 \epsilon = y_N - y \left ( t_N \right ),
 ```
@@ -189,7 +192,7 @@ peut s'écrire
 ```math
 \epsilon = C \tau ^ p
 ```
-où ``p`` dénote l'**ordre** de la méthode. En composant par la fonction ``\ln`` on obtient alors que ``\ln \epsilon`` est une fonction affine de ``\ln \tau`` :
+où ``p`` est appelé l'**ordre** de la méthode. En composant par la fonction ``\ln`` on obtient alors que ``\ln \epsilon`` est une fonction affine de ``\ln \tau`` :
 ```math
 y = \ln \epsilon = p \ln \tau + C
 ```
@@ -197,7 +200,7 @@ dont le coefficient directeur ``p`` est l'ordre.
 
 Le code suivante réutilise la fonction `error` du TP2, et l'applique à plusieurs schémas et pas de temps avant de la visualiser en échelle logarithmique.
 
-3. Commenter l'allure des données.
+3. Commenter l'allure des courbes.
 
 """
 
@@ -220,9 +223,6 @@ begin
 	fig
 end
 
-# ╔═╡ d59037e0-4c61-40c7-ae06-4bf77287298b
-0.125 * 2 ^ 3
-
 # ╔═╡ 86061c1c-4df9-45ea-ad48-c24ca151f1ca
 md"""
 On peut aussi utiliser la méthode des moindres carrés pour estimer l'ordre de ces schémas (package `LsqFit`).
@@ -239,7 +239,8 @@ ordernum(τs, ϵs, p₀ = [1.0; 2.0]) =
 	last(
 		getproperty(
 			curve_fit(model, τs, ϵs, [0.5; 0.5]),
-			:param)
+			:param
+		)
 	)
 
 # ╔═╡ fa291891-0703-4b75-99a7-9113e2a81b83
@@ -251,19 +252,88 @@ md"""
 
 On se propose de résoudre l'équation
 ```math
-y'' \left ( x \right ) = f \left ( x \right )
+y'' \left ( x \right ) = \sin \left ( \pi x \right )
 ```
 avec les conditions
 ```math
 \left \{ \begin{aligned}
 y \left ( 0 \right ) & = 1, \\
-y \left ( 1 \right ) & = 0.
+y' \left ( 1 \right ) & = 0.
 \end{aligned} \right .
 ```
-par deux méthodes :
+par la méthode de tir. On commence par réécrire l'équation scalaire ci-dessus sous la forme d'un système de deux EDO couplées :
+```math
+\left \{ \begin{aligned}
+u' \left ( t \right ) & = v \left ( t \right ), \\
+v' \left ( t \right ) & = \sin \left ( \pi t \right ).
+\end{aligned}
+\right .
+```
 
-1. Méthode de tir ;
-1. Méthode de différences finies.
+Ce modèle est implémenté par la fonction `source` ci-dessous.
+
+"""
+
+# ╔═╡ b6cd4932-c551-406e-8ba6-ee93f9c436c8
+function source(t, y)
+	x = similar(y)
+	x[1] = y[2]
+	x[2] = sin(π * t)
+	return x
+end
+
+# ╔═╡ c8c08cd3-f216-45a0-acee-75d2be6dded6
+md"""
+La spécification des conditions aux limites est plus complex. On se propose ici de considérer trois types de conditions aux limites :
+
+- Dirichlet, tel que ``T \left ( c \right ) = 1`` ;
+- Neumann, tel que ``T' \left ( c \right ) = 0`` (homogène) ;
+- Robin, tel que ``T \left ( c \right ) - \pi T' \left ( c \right ) = 0`` (homogène).
+
+Dans ces équations, ``c \in \left \{ 0, 1 \right \}`` (les bornes du domaine).
+
+L'implémentation de la méthode du tir, telle qu'elle est fait ci-dessous, propose deux versions de ces fonctions, selon que la condition est implémentée en ``x = 0`` (`dirichlet` et `neumann`) ou en ``x = 1`` (`dirichlet!`, `neumann!` ou `robin!`).
+
+"""
+
+# ╔═╡ 4d58e418-f61b-4ada-96e3-d29d4c3e1519
+dirichlet(ȳ) = [1; ȳ[1]]
+
+# ╔═╡ dd9a91e2-52f9-466d-bc52-80b4781f0631
+neumann(ȳ) = [ȳ[1]; 0]
+
+# ╔═╡ 871054b1-62e8-4b86-8740-dd9446243963
+dirichlet!(res, y) = res[1] = y[1] - 1
+
+# ╔═╡ cac08026-b792-4f91-bec1-028a4df22b44
+neumann!(res, y) = res[1] = y[2]
+
+# ╔═╡ 97379cfb-6136-4ddc-8e11-a5913572dfce
+robin!(res, y) = res[1] = y[1] - π * y[2]
+
+# ╔═╡ d5188e9d-b0f8-4110-876c-d1a520a324ef
+function shooting(scheme!, f, τ, s, left, right!, ȳ₀)
+	ȳ = getproperty(
+		nlsolve(ȳ₀) do res, ȳ
+			_, Y = cauchy(scheme!, f, τ, s, left(ȳ))
+			right!(res, last(Y))
+		end,
+		:zero
+	)
+	cauchy(scheme!, f, τ, s, left(ȳ))
+end
+
+# ╔═╡ 976d6502-c1d0-4232-a391-d6d3d2165d73
+begin
+	local T, Y = shooting(midpoint!, source, 0.01, 1.0, dirichlet, robin!, [0.0])
+	local fig = plot()
+	scatter!(fig, T, first.(Y), label = "T")
+	scatter!(fig, T, last.(Y), label = "T'")
+end
+
+# ╔═╡ c8ca6175-f88d-4b00-9999-0fd61a7456f4
+md"""
+**Prolongation possible** : interpolation d'Hermite.
 
 """
 
@@ -287,13 +357,23 @@ par deux méthodes :
 # ╠═666d3cf9-4764-46b1-ba12-84c23f849d84
 # ╟─64c9a088-4e3e-4a7e-a73f-e2501cf6ba5d
 # ╠═1bc9edca-2ed3-444b-a448-a874c5a12ed2
+# ╠═5505d3e2-6978-472e-8fa5-6c8483f236ba
 # ╟─7824c63f-44bb-432f-9c5f-04b336348250
 # ╠═42426ddb-1a42-454b-ba3a-52f792170067
 # ╟─cf81908f-beab-4bbe-a092-e317557825f7
 # ╠═de51eb84-dfaa-412d-9a76-7d1f5a6cecdb
-# ╠═d59037e0-4c61-40c7-ae06-4bf77287298b
 # ╟─86061c1c-4df9-45ea-ad48-c24ca151f1ca
 # ╠═8fae3217-945b-4bde-916d-b396346122ff
 # ╠═a4726400-8ad0-45d3-b201-f333942dd425
 # ╠═fa291891-0703-4b75-99a7-9113e2a81b83
 # ╟─9f840072-38dc-4b57-9556-aaa02b90fa4a
+# ╠═b6cd4932-c551-406e-8ba6-ee93f9c436c8
+# ╟─c8c08cd3-f216-45a0-acee-75d2be6dded6
+# ╠═4d58e418-f61b-4ada-96e3-d29d4c3e1519
+# ╠═dd9a91e2-52f9-466d-bc52-80b4781f0631
+# ╠═871054b1-62e8-4b86-8740-dd9446243963
+# ╠═cac08026-b792-4f91-bec1-028a4df22b44
+# ╠═97379cfb-6136-4ddc-8e11-a5913572dfce
+# ╠═d5188e9d-b0f8-4110-876c-d1a520a324ef
+# ╠═976d6502-c1d0-4232-a391-d6d3d2165d73
+# ╟─c8ca6175-f88d-4b00-9999-0fd61a7456f4

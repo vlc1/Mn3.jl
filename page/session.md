@@ -49,3 +49,8 @@ Merci de bien vouloir trouver :
 * Les enregistrements sont [ici](https://filesender.renater.fr/?s=download&token=504c9dd0-5378-435a-a802-e49afe4fd138) ;
 * Le *notebook* est [là](https://github.com/vlc1/Mn3.jl/blob/master/notebook/tp/3/tp3.jl).
 
+### 10/06/2021
+
+* Les enregistrements sont disponibles [ici](https://filesender.renater.fr/?s=download&token=c96b8e4c-0c84-4641-88fb-5e14cadcd703) ;
+* Le cahier est [là](https://github.com/vlc1/Mn3.jl/blob/master/notebook/tp/4/tp4.jl).
+

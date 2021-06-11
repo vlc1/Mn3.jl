@@ -333,7 +333,7 @@ Il reste à présent à assembler à implémenter la bouche d'intégration tempo
 * Un pas de temps `τ` ;
 * Et un instant `s`
 
-la fonction `integrate` implémentée ci-dessous retourne deux vecteurs, le premier contenant les instants
+la fonction `cauchy` implémentée ci-dessous retourne deux vecteurs, le premier contenant les instants
 ```math
 t_0 \quad t_1 \quad \cdots \quad t_N = s
 ```
@@ -345,7 +345,7 @@ y_0 \quad y_1 \quad \cdots \quad y_N.
 """
 
 # ╔═╡ 1887218b-4a77-4e76-8a97-54d90e69b419
-function integrate(scheme!, f, τ, s, y₀, t₀ = zero(τ))
+function cauchy(scheme!, f, τ, s, y₀, t₀ = zero(τ))
 	t, y = t₀, y₀
     T, Y = [t], [y]
 
@@ -373,7 +373,7 @@ La solution numérique peut être obtenue et visualisée comme suit.
 
 # ╔═╡ b9a3b65e-9c81-499d-acc5-85afa8d6703b
 begin
-	local T, Y = integrate(explicit!, linear, 0.5, 10.0, ones(1))
+	local T, Y = cauchy(explicit!, linear, 0.5, 10.0, ones(1))
 	local fig = plot()
 	scatter!(fig, T, first.(Y), label = "num")
 	plot!(fig, t -> first.(solution.(t)), label = "exact")
@@ -392,7 +392,7 @@ en fonction du schéma (`scheme!`) et du pas en temps (`τ`).
 # ╔═╡ 7fafbd51-99a9-4fea-bebf-6160e62a3ef4
 # Q6 -- À MODIFIER
 function error(scheme!, τ, s)
-	T, num = integrate(scheme!, linear, τ, s, ones(1))
+	T, num = cauchy(scheme!, linear, τ, s, ones(1))
 	exact = solution.(T)
 	norm(last(num))
 end
@@ -475,7 +475,7 @@ end
 
 # ╔═╡ 580e8356-4fd2-47e1-a5a4-7063998b4ecb
 begin
-	local T, Y = integrate(explicit!, nonlinear, 0.1, 1.0, ones(1))
+	local T, Y = cauchy(explicit!, nonlinear, 0.1, 1.0, ones(1))
 	local fig = plot()
 	scatter!(fig, T, first.(Y), label = "num")
 end

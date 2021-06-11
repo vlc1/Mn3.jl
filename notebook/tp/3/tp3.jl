@@ -29,7 +29,7 @@ implicit!(res, x, y, τ, f, t) = res .= x - y - τ * f(t + τ, x)
 midpoint!(res, x, y, τ, f, t) = res .= x - y - τ * f(t + τ / 2, (x + y) / 2)
 
 # ╔═╡ bb5e9ba4-45e2-4910-a446-22aab6ee2f75
-function integrate(scheme!, f, τ, s, y₀, t₀ = zero(τ))
+function cauchy(scheme!, f, τ, s, y₀, t₀ = zero(τ))
 	t, y = t₀, y₀
     T, Y = [t], [y]
 
@@ -191,7 +191,7 @@ md"""
 
 # ╔═╡ ad08bb68-0e9e-4a39-b84a-ed41392dd425
 begin
-	local T, Y = integrate(midpoint!, lotka, 1.0, 1000.0, [10.; 20.])
+	local T, Y = cauchy(midpoint!, lotka, 1.0, 1000.0, [10.; 20.])
 	local fig = plot()
 	plot!(fig, T, first.(Y), label = "Proies")
 	plot!(fig, T, last.(Y), label = "Prédateurs")
