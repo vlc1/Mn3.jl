@@ -292,40 +292,31 @@ La spécification des conditions aux limites est plus complex. On se propose ici
 
 Dans ces équations, ``c \in \left \{ 0, 1 \right \}`` (les bornes du domaine).
 
-L'implémentation de la méthode du tir, telle qu'elle est fait ci-dessous, propose deux versions de ces fonctions, selon que la condition est implémentée en ``x = 0`` (`dirichlet` et `neumann`) ou en ``x = 1`` (`dirichlet!`, `neumann!` ou `robin!`).
-
 """
 
-# ╔═╡ 4d58e418-f61b-4ada-96e3-d29d4c3e1519
-dirichlet(ȳ) = [1; ȳ[1]]
+# ╔═╡ edbe2e42-29fb-4522-ba93-39e23f72d657
+function bc!(res, left, right)
+	res[1] = left[1] - 1.0
+	res[2] = right[2] - 0.0
+	nothing
+end
 
-# ╔═╡ dd9a91e2-52f9-466d-bc52-80b4781f0631
-neumann(ȳ) = [ȳ[1]; 0]
+# ╔═╡ d3e55c3d-b6b2-4e37-9206-1b83ce3bae0e
+function shooting(scheme!, f, τ, s, bc!, y₀)
+	y = getproperty(
+		nlsolve(y₀) do res, y
+			_, Y = cauchy(scheme!, f, τ, s, y)
 
-# ╔═╡ 871054b1-62e8-4b86-8740-dd9446243963
-dirichlet!(res, y) = res[1] = y[1] - 1
-
-# ╔═╡ cac08026-b792-4f91-bec1-028a4df22b44
-neumann!(res, y) = res[1] = y[2]
-
-# ╔═╡ 97379cfb-6136-4ddc-8e11-a5913572dfce
-robin!(res, y) = res[1] = y[1] - π * y[2]
-
-# ╔═╡ d5188e9d-b0f8-4110-876c-d1a520a324ef
-function shooting(scheme!, f, τ, s, left, right!, ȳ₀)
-	ȳ = getproperty(
-		nlsolve(ȳ₀) do res, ȳ
-			_, Y = cauchy(scheme!, f, τ, s, left(ȳ))
-			right!(res, last(Y))
+			bc!(res, y, last(Y))
 		end,
 		:zero
 	)
-	cauchy(scheme!, f, τ, s, left(ȳ))
+	cauchy(scheme!, f, τ, s, y)
 end
 
 # ╔═╡ 976d6502-c1d0-4232-a391-d6d3d2165d73
 begin
-	local T, Y = shooting(midpoint!, source, 0.01, 1.0, dirichlet, robin!, [0.0])
+	local T, Y = shooting(midpoint!, source, 0.01, 1.0, bc!, [1.0; 0.0])
 	local fig = plot()
 	scatter!(fig, T, first.(Y), label = "T")
 	scatter!(fig, T, last.(Y), label = "T'")
@@ -369,11 +360,7 @@ md"""
 # ╟─9f840072-38dc-4b57-9556-aaa02b90fa4a
 # ╠═b6cd4932-c551-406e-8ba6-ee93f9c436c8
 # ╟─c8c08cd3-f216-45a0-acee-75d2be6dded6
-# ╠═4d58e418-f61b-4ada-96e3-d29d4c3e1519
-# ╠═dd9a91e2-52f9-466d-bc52-80b4781f0631
-# ╠═871054b1-62e8-4b86-8740-dd9446243963
-# ╠═cac08026-b792-4f91-bec1-028a4df22b44
-# ╠═97379cfb-6136-4ddc-8e11-a5913572dfce
-# ╠═d5188e9d-b0f8-4110-876c-d1a520a324ef
+# ╠═edbe2e42-29fb-4522-ba93-39e23f72d657
+# ╠═d3e55c3d-b6b2-4e37-9206-1b83ce3bae0e
 # ╠═976d6502-c1d0-4232-a391-d6d3d2165d73
 # ╟─c8ca6175-f88d-4b00-9999-0fd61a7456f4
