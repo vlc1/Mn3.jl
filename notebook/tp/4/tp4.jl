@@ -15,7 +15,7 @@ md"""
 
 	Les cellules suivantes ont été copiées du TP précédent. Merci de ne pas les modifier.
 
-	À la différence des deux derniers TP, celui-ci ne sera pas évalué en classe ensemble.
+	À la différence des deux derniers TP, celui-ci ne sera pas évalué mais réalisé en classe ensemble.
 
 """
 
