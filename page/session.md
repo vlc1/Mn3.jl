@@ -60,6 +60,7 @@ Merci de bien vouloir trouver :
 
 ### 17/06/2021
 
+* Les enregistrements sont disponibles [ici](https://filesender.renater.fr/?s=download&token=7e55fa32-063d-44bb-9f26-d0fd7606e2ed) ;
 * Le cahier du [TD5](https://github.com/vlc1/Mn3.jl/blob/master/notebook/tp/5/td5.jl) ;
 * Le cahier du [TP5](https://github.com/vlc1/Mn3.jl/blob/master/notebook/tp/5/tp5.jl).
 
