@@ -94,7 +94,7 @@ y'' \left ( x \right ) + y \left ( x \right ) = 0, \quad x \in \left ] 0, \pi \r
 avec les conditions aux limites
 ```math
 \left \{ \begin{aligned}
-y' \left ( 0 \right ) & = 0, \\
+y \left ( 0 \right ) & = 0, \\
 y \left ( \pi \right ) & = 1.
 \end{aligned} \right .
 ```
@@ -170,7 +170,7 @@ y \left (0, x \right ) = 0, \quad 0 < x < \pi,
 et aux conditions aux limites
 ```math
 \left \{ \begin{aligned}
-y' \left ( t, 0 \right ) & = 0, \\
+y \left ( t, 0 \right ) & = 0, \\
 y \left ( t, \pi \right ) & = 1,
 \end{aligned} \right .\quad t > 0.
 ```
@@ -201,7 +201,7 @@ md"""
 """
 
 # ╔═╡ Cell order:
-# ╠═07cbb1bf-7943-413c-8e3b-fb823e7fd3c8
+# ╟─07cbb1bf-7943-413c-8e3b-fb823e7fd3c8
 # ╠═8b7b1636-bdc5-4293-92e1-bf3019dbee85
 # ╠═bfa6143a-1b2f-4eda-a647-3ef875d84f1d
 # ╠═9daa0844-f897-46d7-b1f9-d03743b35001

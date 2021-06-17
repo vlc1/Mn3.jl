@@ -58,3 +58,8 @@ Merci de bien vouloir trouver :
 * Les enregistrements sont disponibles [ici](https://filesender.renater.fr/?s=download&token=c96b8e4c-0c84-4641-88fb-5e14cadcd703) ;
 * Le cahier est [là](https://github.com/vlc1/Mn3.jl/blob/master/notebook/tp/4/tp4.jl).
 
+### 17/06/2021
+
+* Le cahier du [TD5](https://github.com/vlc1/Mn3.jl/blob/master/notebook/tp/5/td5.jl) ;
+* Le cahier du [TP5](https://github.com/vlc1/Mn3.jl/blob/master/notebook/tp/5/tp5.jl).
+
