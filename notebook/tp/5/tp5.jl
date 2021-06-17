@@ -191,6 +191,7 @@ par la méthode des différences finies.
 # Q7
 function unsteady(t, y)
 	x = zero(y)
+    n = length(y)
 	return x
 end
 
@@ -199,6 +200,9 @@ md"""
 8. Résoudre le problème de Cauchy qui découle de la discrétisation spatiale de la question 8 par la méthode de votre choix. Visualiser la solution à plusieurs instants compris entre ``0 < t < 1``, puis en plusieurs points ``0 < x < \pi`` en fonction du temps sur le même intervalle (``\left [ 0, 1 \right ]``).
 
 """
+
+# ╔═╡ b9497f6e-29ea-4efb-a2e2-73caa5b51511
+y₀ = zeros(3)
 
 # ╔═╡ Cell order:
 # ╟─07cbb1bf-7943-413c-8e3b-fb823e7fd3c8
@@ -220,3 +224,4 @@ md"""
 # ╟─3f980e32-e2c5-4679-a6a8-0caad4249817
 # ╠═7ecac97a-f93f-4bd7-a59d-738d7de2d00e
 # ╟─4997c413-2ac2-4913-a5e3-806ab0c93605
+# ╠═b9497f6e-29ea-4efb-a2e2-73caa5b51511
