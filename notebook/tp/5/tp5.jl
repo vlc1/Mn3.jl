@@ -89,7 +89,7 @@ md"""
 
 On se propose de résoudre le problème aux limites suivant :
 ```math
-y'' \left ( x \right ) + y \left ( x \right ) = 0, \quad x \in \left ] 0, \pi \right [,
+y'' \left ( x \right ) + \frac{1}{4} y \left ( x \right ) = 0, \quad x \in \left ] 0, \pi \right [,
 ```
 avec les conditions aux limites
 ```math
@@ -103,7 +103,11 @@ y \left ( \pi \right ) & = 1.
 
 !!! note "Remarque"
 
-	Ne pas omettre les conditions aux limites.
+	Ne pas omettre les conditions aux limites. On cherchera la solution sous la forme
+	```math
+	y \colon x \mapsto A \sin \left ( \omega x \right ) + B \cos \left ( \omega x \right )
+	```
+	où ``\omega`` est à déterminer.
 
 2. Implémenter la solution analytique dans la fonction `solution` ci-dessous.
 
